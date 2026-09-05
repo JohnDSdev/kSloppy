@@ -1,0 +1,26 @@
+name: Test and package
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recognition regression tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Install Krita and virtual display
+        run: sudo apt-get update && sudo apt-get install -y krita xvfb python3-pyqt5
+      - name: Real Krita integration test
+        run: python3 tests/run_krita_smoke.py
+      - name: Package plugin
+        run: python3 package.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kSloppy-test-evidence
+          path: test-output/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kSloppy-plugin
+          path: dist/kSloppy.zip
