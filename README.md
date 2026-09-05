@@ -2,6 +2,8 @@
 
 Sketch a questionable circle. Press Enter. Get a circle.
 
+![Recognition examples: rough strokes in gray, fitted geometry in green](docs/examples.svg)
+
 A free, local Krita Python plugin for turning a single rough stroke into clean,
 editable vector geometry. No AI service, account, NumPy, or extra Python packages.
 
